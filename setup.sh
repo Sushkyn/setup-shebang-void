@@ -130,7 +130,18 @@ XBPS_REPO="https://repo-default.voidlinux.org/current"
 xbps-install -Sy -R "$XBPS_REPO" -r /mnt base-system grub-x86_64-efi $UCODE linux linux-firmware vim
 
 # fstab
-mount -v | awk '{ if ($1 ~ /^\//) print $1" "$3" "$5" defaults 0 1" }' > /mnt/etc/fstab
+blkid | grep -E '/dev/(sd|nvme)' | while read -r line; do
+    dev=$(echo "$line" | awk -F: '{print $1}')
+    uuid=$(echo "$line" | awk -F'UUID="' '{print $2}' | awk -F'"' '{print $1}')
+    type=$(echo "$line" | awk -F'TYPE="' '{print $2}' | awk -F'"' '{print $1}')
+    mountpoint=""
+    if [ "$type" = "vfat" ]; then
+        mountpoint="/boot/efi"
+    elif [ "$type" = "ext4" ]; then
+        mountpoint="/"
+    fi
+    [ -n "$mountpoint" ] && echo "UUID=$uuid $mountpoint $type defaults 0 1"
+done > /mnt/etc/fstab
 echo "/swap/swapfile none swap defaults 0 0" >> /mnt/etc/fstab
 mount --bind /dev /mnt/dev
 mount --bind /proc /mnt/proc
