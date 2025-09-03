@@ -163,7 +163,7 @@ basestrap /mnt linux-zen linux-zen-headers linux-firmware mkinitcpio
 fstabgen -U /mnt >/mnt/etc/fstab
 
 # Chroot
-(INIT="$INIT" PART2="$PART2" ROOT_PASSWORD="$ROOT_PASSWORD" ENCRYPTED="$ENCRYPTED" REGION_CITY="$REGION_CITY" HOST="$HOST" USERNAME="$USERNAME" KEYMAP="$KEYMAP" artix-chroot /mnt /bin/bash -c 'bash <(curl -s https://raw.githubusercontent.com/shebang-linux/setup-shebang/main/deploy.sh); exit')
+(INIT="$INIT" PART2="$PART2" ROOT_PASSWORD="$ROOT_PASSWORD" ENCRYPTED="$ENCRYPTED" REGION_CITY="$REGION_CITY" HOST="$HOST" USERNAME="$USERNAME" KEYMAP="$KEYMAP" artix-chroot /mnt /bin/bash -c 'bash <(curl -s https://raw.githubusercontent.com/Sushkyn/setup-shebang-void/main/deploy.sh); exit')
 
 # Save connection
 if [[ ! -f /etc/wpa_supplicant/wpa_supplicant.conf ]]; then
