@@ -14,9 +14,9 @@ fi
 # Detect CPU vendor for microcode
 UCODE=""
 if grep -m1 -Eiq '^vendor_id\s+:\s+GenuineIntel' /proc/cpuinfo; then
-  UCODE="intel-ucode"
+  UCODE="linux-firmware-intel"
 elif grep -m1 -Eiq '^vendor_id\s+:\s+AuthenticAMD' /proc/cpuinfo; then
-  UCODE="amd-ucode"
+  UCODE="linux-firmware-amd"
 fi
 
 confirm_password() {
