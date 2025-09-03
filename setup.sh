@@ -132,6 +132,10 @@ xbps-install -Sy -R "$XBPS_REPO" -r /mnt base-system grub-x86_64-efi $UCODE linu
 # fstab
 mount -v | awk '{ if ($1 ~ /^\//) print $1" "$3" "$5" defaults 0 1" }' > /mnt/etc/fstab
 echo "/swap/swapfile none swap defaults 0 0" >> /mnt/etc/fstab
+mount --bind /dev /mnt/dev
+mount --bind /proc /mnt/proc
+mount --bind /sys /mnt/sys
+mount --bind /run /mnt/run
 
 # Configure inside chroot
 cat <<EOF | chroot /mnt /bin/bash -eux
