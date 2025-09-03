@@ -136,6 +136,7 @@ mount --bind /dev /mnt/dev
 mount --bind /proc /mnt/proc
 mount --bind /sys /mnt/sys
 mount --bind /run /mnt/run
+mount -t efivarfs efivarfs /mnt/sys/firmware/efi/efivars
 
 # Configure inside chroot
 cat <<EOF | chroot /mnt /bin/bash -eux
